@@ -62,8 +62,20 @@ class Captcha {
     */
     public static function create($id = null)
     {
-
-        static::$char = Str::random(static::$config['length'], static::$config['type']);
+        switch(static::$config['type'])
+        {
+            case 'alpanumeric':
+                static::$char = Str::random(static::$config['length']);
+                break;
+            case 'alpha':
+                static::$char = static::alphaCaptchaString(static::$config['length']);
+                break;
+            case 'numeric':
+                 static::$char = static::numericCaptchaString(static::$config['length']);
+                break;
+            default:
+                static::$char = Str::random(static::$config['length']);
+        }
 
         Session::put('captchaHash', Hash::make(static::$config['sensitive'] === true ? static::$char : Str::lower(static::$char)));
 
@@ -204,6 +216,36 @@ class Captcha {
 
 		return URL::to('captcha?' . mt_rand(100000, 999999));
 
+    }
+
+    /**
+     * Returns string for captha,
+     * containing only numeric[0-9] characters
+     *
+     * @access  public
+     * @return  string
+     */
+    public function numericCaptchaString($length)
+    {
+        return (string) mt_rand(100000, 999999); strtoupper(substr(md5(microtime()), 0, $length));
+    }
+
+    /**
+     * Returns string for captha,
+     * containing only alpha[a-Z] characters
+     *
+     * @access  public
+     * @return  string
+     */
+    public function alphaCaptchaString($length)
+    {
+        $pool = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $str = '';
+        for ($i=0; $i < $length; $i++)
+        {
+            $str .= substr($pool, mt_rand(0, strlen($pool) -1), 1);
+        }
+        return $str;
     }
 
 }

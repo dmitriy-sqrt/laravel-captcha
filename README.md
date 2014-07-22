@@ -3,6 +3,8 @@ It is just a copy of https://github.com/mewebstudio/captcha but maintained to se
 
 A simple [Laravel 4.1](http://laravel.com/) service provider for including the [Captcha for Laravel 4.1](https://github.com/johntaa/captcha).
 
+*Added working captcha symbols type selection (alpha|alphanumeric|numeric)
+
 ## Preview
 ![Preview](http://i.imgur.com/kfXYhlk.jpg?1)
 
@@ -20,7 +22,7 @@ project's `composer.json`.
 {
     "require": {
         "laravel/framework": "4.*",
-        "johntaa/captcha": "dev-master" 
+        "johntaa/captcha": "dev-master"
     },
     "minimum-stability": "dev"
 }
@@ -89,4 +91,4 @@ To use your own settings, publish config.
 
     });
 ```
- 
+
